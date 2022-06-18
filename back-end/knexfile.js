@@ -6,6 +6,8 @@
 
 
  const path = require("path");
+ 
+ require("dotenv").config();
 
  const {
    DATABASE_URL = "postgres://arlezlqp:URIPrI-U_QN8fcQm4kxBWcmM1kC_9ItY@lallah.db.elephantsql.com/arlezlqp",
@@ -14,7 +16,7 @@
    DATABASE_URL_PREVIEW = "postgres://arlezlqp:URIPrI-U_QN8fcQm4kxBWcmM1kC_9ItY@lallah.db.elephantsql.com/arlezlqp",
    DEBUG,
  } = process.env;
- 
+ console.log(DATABASE_URL_PREVIEW)
  module.exports = {
    development: {
      client: "postgresql",
