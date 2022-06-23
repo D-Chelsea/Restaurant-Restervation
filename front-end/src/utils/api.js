@@ -89,6 +89,17 @@ export async function listReservations(params, signal) {
   };
   return await fetchJson(url, options, reservation);
 }
+
+/**
+ * Retrieves all existing tables.
+ * @returns {Promise<[tables]>}
+ *  a promise that resolves to a possibly empty array of tables saved in the database.
+ */
+
+ export async function listTables(signal) {
+  const url = new URL(`${API_BASE_URL}/tables`);
+  return await fetchJson(url, { headers, signal }, []);
+}
 /**
  * Retrieves the reservation with the specified `reservationId`
  * @param reservationId
@@ -106,3 +117,15 @@ export async function readReservation(reservationId, signal) {
   .then(formatReservationTime)
 }
 
+/** returns updated data about the reservation's status to the given reservation's page*/
+
+export async function updateStatus(reservation_id, status, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}/status`);
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: { status } }),
+    signal,
+  };
+  return await fetchJson(url, options, status);
+}
