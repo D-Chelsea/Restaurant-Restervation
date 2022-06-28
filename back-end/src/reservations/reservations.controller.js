@@ -155,6 +155,50 @@ function hasReservationTime(req, res, next){
   next({status: 400, message: `reservation_time isn't valid ${reservation_time}`})
 }
 
+function isValidDay(req, res, next) {
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const { data } = req.body;
+  const reservationDate = new Date(
+    `${data.reservation_date} ${data.reservation_time}`
+  );
+  let day = days[reservationDate.getDay()];
+  let time = data.reservation_time;
+  if (reservationDate < new Date() && day === "Tuesday") {
+    return next({
+      status: 400,
+      message:
+        "Reservations can only be created on a future date, excluding Tuesdays",
+    });
+  }
+  if (reservationDate < new Date()) {
+    return next({
+      status: 400,
+      message: "Reservations can only be created on a future date",
+    });
+  }
+  if (day === "Tuesday") {
+    return next({
+      status: 400,
+      message: "Restaurant is closed on Tuesdays",
+    });
+  }
+  if (time <= "10:30" || time >= "21:30") {
+    return next({
+      status: 400,
+      message: "Reservations can only be made from 10:30AM - 9:30PM.",
+    });
+  }
+  next();
+}
+
 async function create(req, res, next) {
   const data = await service.create(req.body.data)
   res.status(201).json({ data })  
@@ -191,6 +235,7 @@ module.exports = {
     hasReservationDate,
     hasValidDate,
     hasReservationTime,
+    isValidDay,
     asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(reservationExists), read]
 };
