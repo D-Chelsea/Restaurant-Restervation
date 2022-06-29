@@ -27,6 +27,7 @@ function ReservationForm(){
     
       const handleSubmit = async (event) => {
         event.preventDefault();
+        setPostResError(false)
         const abortController = new AbortController();
         let newReservationDate = formData.reservation_date;
         setPostResError(null);
@@ -37,13 +38,12 @@ function ReservationForm(){
           setFormData(initialFormState);
           history.push(`/dashboard?date=${newReservationDate}`);
         } catch (error) {
-          setPostResError(error);
+          if( error.name !== "AbortError") setPostResError(error)
         }
         return () => abortController.abort();
       };
 
 
-    console.log(formData)
 
 
     return(
