@@ -1,10 +1,9 @@
-const knex = require("../db/connection")
-const table = "tables";
+const knex = require("../db/connection");
 
-async function list() {
-  return knex(table).select("*").orderBy("table_name");
+
+function list() {
+  return knex("tables").select("*")
 }
-
 module.exports = {
     list,
   }
