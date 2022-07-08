@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useRouteMatch } from "react-router-dom";
-import { listReservations } from "../utils/api";
+import { useHistory } from "react-router-dom";
+import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { today, next, previous } from "../utils/date-time";
 import useQuery from "../utils/useQuery";
-import ViewReservation from "../layout/Reservations/ViewReservation";
+import ViewReservation from "../layout/Reservations/ViewReservation"
+import ListTable from "../layout/Tables/ListTable"
 
 /**
  * Defines the dashboard page.
@@ -12,16 +13,25 @@ import ViewReservation from "../layout/Reservations/ViewReservation";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
+
 function Dashboard() {
   const query = useQuery()
   const history = useHistory()
-  const [reservations, setReservations] = useState([]);
+  const [reservations, setReservations] = useState([])
+  const [tables, setTables] = useState([])
   const [error, setError] = useState(null);
-
   const [date, setDate] = useState(query.get("date") || today())
 
   useEffect(loadDashboard, [date])
+  useEffect(loadTables, [])
 
+  function loadTables() {
+    const abortController = new AbortController();
+    listTables(abortController.signal)
+      .then(setTables)
+      .catch(setError);
+    return () => abortController.abort();
+  }
 
 
   function loadDashboard() {
@@ -73,8 +83,9 @@ function Dashboard() {
 
       <ErrorAlert error={error} />
       <ViewReservation reservations={reservations} />
+      <ListTable tables={tables}/>
     </main>
-  );
+  )
 }
 
 export default Dashboard;

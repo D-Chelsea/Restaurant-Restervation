@@ -1,22 +1,22 @@
 import React , { useState }from 'react'
 import { useHistory } from "react-router"
 import ErrorAlert from '../ErrorAlert'
-import { updateStatus} from '../../utils/api'
+import { updateStatus } from '../../utils/api'
 
 function ViewReservation({reservations}){
     const [showError, setShowError] = useState(null);
     const history = useHistory()
-/** handle cancel a reservation*/
-async function handleCancel(reservationId) {
-    if (window.confirm('Do you want to cancel this reservation? This cannot be undone.')) {
-        try {
-            await updateStatus(reservationId)
-            history.go()
-        } catch (error) {
-            setShowError(error)
+    /** handle cancel a reservation*/
+    async function handleCancel(reservationId) {
+        if (window.confirm('Do you want to cancel this reservation? This cannot be undone.')) {
+            try {
+                await updateStatus(reservationId)
+                history.go()
+            } catch (error) {
+                setShowError(error)
+            }
         }
     }
-}
 
 return(
     <div>
@@ -35,6 +35,9 @@ return(
       <ErrorAlert error={showError}/>
       <button>
         <a href={`/reservations/${reservation.reservation_id}/edit`}>Edit</a>
+      </button>
+      <button>
+        <a href={`/reservations/${reservation.reservation_id}/seat`}>Seat</a>
       </button>
       <button onClick={handleCancel}>Cancel</button>
     </div>

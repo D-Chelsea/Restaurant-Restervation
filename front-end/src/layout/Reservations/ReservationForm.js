@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import { useHistory } from "react-router-dom";
-import { createReservation } from "../../utils/api";
-import ErrorAlert from "../ErrorAlert";
+import React, {useState} from "react"
+import { useHistory } from "react-router-dom"
+import { createReservation } from "../../utils/api"
+import ErrorAlert from "../ErrorAlert"
 
 function ReservationForm(){
     const history = useHistory();
@@ -12,8 +12,8 @@ function ReservationForm(){
         mobile_number: "",
         reservation_date: "",
         reservation_time: "",
-        people: "",
-      };
+        people: 1,
+      }
 
 
     const [formData, setFormData] = useState(initialFormState);
@@ -22,26 +22,29 @@ function ReservationForm(){
     const handleChange = (event) => {
         event.preventDefault();
         setFormData((newReservation) => ({
-          ...newReservation,[event.target.name]: event.target.value,}));
-      };
+          ...newReservation,[event.target.name]: event.target.value,}))
+      }
+
     
       const handleSubmit = async (event) => {
         event.preventDefault();
-        setPostResError(false)
         const abortController = new AbortController();
-        let newReservationDate = formData.reservation_date;
-        setPostResError(null);
-        formData.people = Number(formData.people);
-    
-        try {
-          await createReservation(formData, abortController.signal);
-          setFormData(initialFormState);
-          history.push(`/dashboard?date=${newReservationDate}`);
-        } catch (error) {
-          if( error.name !== "AbortError") setPostResError(error)
+        const newReservation = {
+          ...formData
         }
-        return () => abortController.abort();
-      };
+        try {
+          const response = await createReservation(newReservation, abortController.signal);
+          console.log("Success: " + response)
+          setFormData({...initialFormState});
+          history.push(`/dashboard?date=${newReservation.reservation_date}`)
+        } catch (error) {
+          if (error.name !== "AbortError") {setPostResError(error)}
+        }
+  
+        return () => {
+          abortController.abort();
+        }
+      }
 
 
 

@@ -5,9 +5,10 @@
 import formatReservationDate from "./format-reservation-date";
 import formatReservationTime from "./format-reservation-date";
 
-const API_BASE_URL = "https://restautarant-res-back-end.herokuapp.com"
-  // process.env.REACT_APP_API_BASE_URL || "http://localhost:6001";
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:6001";
 
+  // "https://restautarant-res-back-end.herokuapp.com"
 /**
  * Defines the default headers for these functions to work with `json-server`
  */
@@ -57,15 +58,19 @@ async function fetchJson(url, options, onCancel) {
  * @returns {Promise<[reservation]>}
  *  a promise that resolves to a possibly empty array of reservation saved in the database.
  */
-
-export async function listReservations(params, signal) {
-  const url = new URL(`${API_BASE_URL}/reservations`);
-  Object.entries(params).forEach(([key, value]) =>
-    url.searchParams.append(key, value.toString())
-  );
-  return await fetchJson(url, { headers, signal }, [])
-    .then(formatReservationDate)
-    .then(formatReservationTime);
+ export async function listReservations(params, signal) {
+  if (params) {
+    const url = new URL(`${API_BASE_URL}/reservations`);
+    Object.entries(params).forEach(([key, value]) =>
+      url.searchParams.append(key, value.toString())
+    );
+    return await fetchJson(url, { headers, signal }, [])
+      .then(formatReservationDate)
+      .then(formatReservationTime);
+  } else {
+    const url = `${API_BASE_URL}/reservations`;
+    return await fetchJson(url, { headers, signal }, []);
+  }
 }
 
 /**
@@ -89,6 +94,16 @@ export async function listReservations(params, signal) {
   };
   return await fetchJson(url, options, reservation);
 }
+export async function createTable(table, signal) {
+  const url = `${API_BASE_URL}/tables`
+  const options = {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ data: table }),
+    signal
+  }
+  return await fetchJson(url, options, table)
+}
 
 /**
  * Retrieves all existing tables.
@@ -96,9 +111,10 @@ export async function listReservations(params, signal) {
  *  a promise that resolves to a possibly empty array of tables saved in the database.
  */
 
+
  export async function listTables(signal) {
-  const url = new URL(`${API_BASE_URL}/tables`);
-  return await fetchJson(url, { headers, signal }, []);
+  const url = `${API_BASE_URL}/tables`
+  return await fetchJson(url, { signal })
 }
 /**
  * Retrieves the reservation with the specified `reservationId`
@@ -128,4 +144,11 @@ export async function updateStatus(reservation_id, status, signal) {
     signal,
   };
   return await fetchJson(url, options, status);
+}
+export async function deleteTable(tableId) {
+  const url = `${API_BASE_URL}/tables/${tableId}/seat`
+  const options = {
+    method: 'DELETE'
+  }
+  return await fetchJson(url, options)
 }
