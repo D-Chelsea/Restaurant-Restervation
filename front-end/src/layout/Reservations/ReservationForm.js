@@ -12,7 +12,7 @@ function ReservationForm(){
         mobile_number: "",
         reservation_date: "",
         reservation_time: "",
-        people: 1,
+        people: "",
       }
 
 
@@ -22,9 +22,13 @@ function ReservationForm(){
     const handleChange = (event) => {
         event.preventDefault();
         setFormData((newReservation) => ({
-          ...newReservation,[event.target.name]: event.target.value,}))
+          ...newReservation,[event.target.name]: event.target.value}))
       }
-
+      const handleNumberChange = (event) => {
+        event.preventDefault();
+        setFormData((newReservation) => ({
+          ...newReservation,[event.target.name]: Number(event.target.value)}))
+      }
     
       const handleSubmit = async (event) => {
         event.preventDefault();
@@ -126,7 +130,7 @@ function ReservationForm(){
           <input
             className="form-input"
             id="people"
-            onChange={handleChange}
+            onChange={handleNumberChange}
             type="number"
             name="people"
             required
@@ -143,7 +147,7 @@ function ReservationForm(){
         <button
           className="form-button btn btn-secondary"
           type="button"
-          onClick={() => history.push("/")}
+          onClick={() => history.push(`/dashboard?date=${formData.reservation_date}`)}
         >
           Cancel
         </button>

@@ -101,11 +101,11 @@ function hasPeople(req, res, next) {
   });
 }
 function peopleValidation(req, res, next) {
-  if (typeof res.locals.people !== "number") {
+  if (typeof req.body.data.people !== "number") {
     return next({
       status: 400,
-      message: "Property people must be a number.",
-    });
+      message: "Property people must be a gbfhgfhhfgnumber.",
+    })
   }
   next();
 }
