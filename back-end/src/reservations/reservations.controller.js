@@ -104,7 +104,7 @@ function peopleValidation(req, res, next) {
   if (typeof req.body.data.people !== "number") {
     return next({
       status: 400,
-      message: "Property people must be a gbfhgfhhfgnumber.",
+      message: "Property people must be a number.",
     })
   }
   next();
