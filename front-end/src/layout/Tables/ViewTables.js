@@ -49,9 +49,9 @@ function ViewTables({ table, index }) {
         <div>
             <div key={index}>
                 <div>
-                    <h2>Table Name: {table.table_name}</h2><hr />
+                    <h2>Tgfdgfdable Name: {table.table_name}</h2><hr />
                     <p>Capacity: {table.capacity}</p>
-                    <p data-table-id-status={`${table.table_id}`}>Status:{table.reservation_id}</p>
+                    <p data-table-id-status={`${table.table_id}`}>Status:{table.reservation_id ? "Occupied" : "Free"}</p>
                     {foundRes && (
                         <p>{foundRes.first_name} {foundRes.last_name}</p>
                     )}

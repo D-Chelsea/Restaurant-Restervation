@@ -74,7 +74,7 @@ async function validReservationId(req, res, next) {
   const { reservation_id } = req.body.data;
   const reservation = await reservationService.read(reservation_id);
   if (reservation) {
-    res.locals.reservation = reservation;
+    res.locals.reservation = reservation
     return next();
   }
   next({
