@@ -22,23 +22,28 @@ return(
     <div>
     {reservations.map((reservation) => (
     <div key={reservation.reservation_id}>
-        <p>
+        {/* <p>
         {reservation.status}
-        </p>
+        </p> */}
         <p>Name: {reservation.first_name} {reservation.last_name}</p>
         <p>Mobile: {reservation.mobile_number}</p>
         <p>Party Size: {reservation.people}</p>
         <p>
         {reservation.reservation_date} at {reservation.reservation_time}
         </p>
+        <p data-reservation-id-status={`${reservation.reservation_id}`}>
+          Status: {reservation.status}
+        </p>
     <div>
       <ErrorAlert error={showError}/>
       <button>
         <a href={`/reservations/${reservation.reservation_id}/edit`}>Edit</a>
       </button>
+      {reservation.status === 'booked' && (
       <button>
         <a href={`/reservations/${reservation.reservation_id}/seat`}>Seat</a>
       </button>
+      )}
       <button onClick={handleCancel}>Cancel</button>
     </div>
     </div>
