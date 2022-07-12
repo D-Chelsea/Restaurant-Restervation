@@ -8,10 +8,12 @@ function ReservationIdSeats() {
     const [selectOptions, setSelectOptions] = useState('')
     const [error, setError] = useState(null)
     const { reservationId } = useParams()
+
+
     const history = useHistory()
     useEffect(() => {
         const abortController = new AbortController();
-        setError(null);
+        setError(null)
         async function loadTables() {
             try {
                 const response = await listTables(abortController.signal)
