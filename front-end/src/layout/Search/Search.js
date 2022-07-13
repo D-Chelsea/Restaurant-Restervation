@@ -49,7 +49,7 @@ export default function Search() {
             {reservations.length > 0 ? (
                 <ViewReservations reservations={reservations} />
             ) : found && reservations.length === 0 ? (
-                <p>No reservations match</p>
+                <p>No reservations found</p>
             ) : ('')}
         </div>
     )

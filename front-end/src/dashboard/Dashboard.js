@@ -57,8 +57,8 @@ function Dashboard() {
 
   return (
     <main>
-      <div>
-        <h1 >Dashboard</h1>
+      <div className="text-center py-4">
+        <h1>Dashboard</h1>
         <div>
           <label className="mx-2" htmlFor="reservation_date">
             Choose date:
@@ -74,9 +74,9 @@ function Dashboard() {
 
         <div>
           <div>
-            <button onClick={() => handlePreviousDate(date)}>Previous</button>
-            <button onClick={() => setDate(today())}>Today</button>
-            <button onClick={() => handleNextDate(date)}>Next</button>
+            <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#83e6cb"}} onClick={() => handlePreviousDate(date)}>Previous</button>
+            <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#83e6cb"}} onClick={() => setDate(today())}>Today</button>
+            <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#83e6cb"}} onClick={() => handleNextDate(date)}>Next</button>
           </div>
         </div>
       </div>

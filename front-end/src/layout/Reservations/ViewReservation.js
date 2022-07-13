@@ -19,9 +19,10 @@ function ViewReservation({reservations}){
     }
 
 return(
-    <div>
+    <div className="container">
     {reservations.map((reservation) => (
-    <div key={reservation.reservation_id}>
+    <div className="card mb-2"  key={reservation.reservation_id}>
+      <div className="card-body text-center mx-2">
         {/* <p>
         {reservation.status}
         </p> */}
@@ -34,17 +35,17 @@ return(
         <p data-reservation-id-status={`${reservation.reservation_id}`}>
           Status: {reservation.status}
         </p>
+        
     <div>
       <ErrorAlert error={showError}/>
-      <button>
+      <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#f2469c"}}>
         <a href={`/reservations/${reservation.reservation_id}/edit`}>Edit</a>
       </button>
-      {reservation.status === 'booked' && (
-      <button>
+      <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#f2469c"}}>
         <a href={`/reservations/${reservation.reservation_id}/seat`}>Seat</a>
       </button>
-      )}
-      <button onClick={handleCancel}>Cancel</button>
+      <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#4a0025"}} onClick={handleCancel}>Cancel</button>
+    </div>
     </div>
     </div>
     ))}

@@ -46,12 +46,13 @@ function ViewTables({ table, index }) {
     console.log(reservations)
     const foundRes = reservations.find(res => Number(table.reservation_id) === Number(res.reservation_id))
     return (
-        <div>
+        <div className="container">
             <div key={index}>
-                <div>
-                    <h2>Table Name: {table.table_name}</h2><hr />
+                <div className="card mb-2">
+                    <div className="card-body text-center mx-2">
+                    <h4>Table Name: {table.table_name}</h4><hr />
                     <p>Capacity: {table.capacity}</p>
-                    <p data-table-id-status={`${table.table_id}`}>Status:{table.reservation_id ? "Occupied" : "Free"}</p>
+                    <p data-table-id-status={`${table.table_id}`}>Status: {table.reservation_id ? "Occupied" : "Free"}</p>
                     {foundRes && (
                         <p>{foundRes.first_name} {foundRes.last_name}</p>
                     )}
@@ -65,6 +66,7 @@ function ViewTables({ table, index }) {
                     )
                     }
                     <ErrorAlert error={error} />
+                </div>
                 </div>
             </div>
         </div>

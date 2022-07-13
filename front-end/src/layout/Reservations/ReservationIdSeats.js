@@ -58,8 +58,8 @@ function ReservationIdSeats() {
                         </select>
                     </div>
                 )}
-                <button className="btn btn-primary" type='submit'>Submit</button>
-                <button className="btn btn-danger" onClick={history.goBack}>Cancel</button>
+                <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#f2469c"}} type='submit'>Submit</button>
+                <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#f2469c"}} onClick={history.goBack}>Cancel</button>
             </form>
         </div>
     )

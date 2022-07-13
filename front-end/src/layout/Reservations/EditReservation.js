@@ -56,7 +56,7 @@ export default function EditReservation() {
         const abortController = new AbortController()
         try {
             const response = await updateReservation(formData, abortController.signal)
-            history.push(`/dashboard?date=${(formData.reservation_date)}`)
+            history.push(`/dashboard?date=${formData.reservation_date}`)
             return response
         } catch (error) {
             setError(error)
