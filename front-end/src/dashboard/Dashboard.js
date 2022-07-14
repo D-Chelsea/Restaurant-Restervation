@@ -54,14 +54,16 @@ function Dashboard() {
     setDate(next(date))
     history.push(`dashboard?date=${next(date)}`)
   }
+//when I console.log reservations i get an emty array. I cant remeber when this issue happened but it doesnt effect the UI
 
+console.log(reservations)
   return (
     <main>
       <div className="text-center py-4">
         <h1>Dashboard</h1>
         <div>
           <label className="mx-2" htmlFor="reservation_date">
-            Choose date:
+            <h4>Choose date:</h4>
           </label>
           <input
             type="date"
@@ -83,6 +85,7 @@ function Dashboard() {
 
       <ErrorAlert error={error} />
       <ViewReservation reservations={reservations} />
+      <h2 className="text-center">Tables</h2>
       <ListTable tables={tables}/>
     </main>
   )

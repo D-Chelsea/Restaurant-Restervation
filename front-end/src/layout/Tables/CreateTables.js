@@ -8,7 +8,7 @@ function CreateTables(){
    
     return(
         <div>
-             <h2> Create New Table</h2>
+             <h2 className="text-center mb-4 "> Create New Table</h2>
              <TableForm />
         </div>
 

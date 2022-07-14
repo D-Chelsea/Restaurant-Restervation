@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ErrorAlert from '../ErrorAlert'
-import ViewReservations from '../Reservations/ViewReservation'
+import ViewReservation from '../Reservations/ViewReservation'
 import { listReservations } from '../../utils/api'
 
 export default function Search() {
@@ -29,12 +29,12 @@ export default function Search() {
     }
 
     return (
-        <div>
+        <div className="card-body text-center">
             <ErrorAlert error={error} />
             <h2>Search By Phone Number</h2>
             <form onSubmit={handleSubmit}>
                 <input
-                    className='form-control'
+                    className='form-control form-group'
                     type="text"
                     name="mobile_number"
                     value={number}
@@ -42,14 +42,17 @@ export default function Search() {
                     placeholder="Enter a customer's phone number"
                     required
                 />
-                <button className='btn btn-primary' type="submit">
+                <button className="btn btn-outline-light mb-4 mr-3 mb-2 " style={{backgroundColor: "#f2469c"}} type="submit">
                     Find
                 </button>
             </form>
             {reservations.length > 0 ? (
-                <ViewReservations reservations={reservations} />
+            <div>
+            <h3>Matching Reservation:</h3>
+            <ViewReservation reservations={reservations} />
+            </div>
             ) : found && reservations.length === 0 ? (
-                <p>No reservations found</p>
+                <h4>No reservations found</h4>
             ) : ('')}
         </div>
     )

@@ -22,10 +22,8 @@ return(
     <div className="container">
     {reservations.map((reservation) => (
     <div className="card mb-2"  key={reservation.reservation_id}>
+      {(reservation.status !== "finished" && reservation.status !== "cancelled") &&(
       <div className="card-body text-center mx-2">
-        {/* <p>
-        {reservation.status}
-        </p> */}
         <p>Name: {reservation.first_name} {reservation.last_name}</p>
         <p>Mobile: {reservation.mobile_number}</p>
         <p>Party Size: {reservation.people}</p>
@@ -47,6 +45,7 @@ return(
       <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#4a0025"}} onClick={handleCancel}>Cancel</button>
     </div>
     </div>
+      )}
     </div>
     ))}
   </div>

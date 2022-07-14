@@ -54,14 +54,14 @@ function ReservationForm(){
 
 
     return(
-    <>
-    <form onSubmit={handleSubmit} className="form-card">
+    <div className="card">
+    <form onSubmit={handleSubmit} className="form-card mx-2">
       <fieldset>
         <legend className="form-item">Reservation Form</legend>
         <div className="form-item">
           <label htmlFor="first_name">First Name:</label>
           <input
-            className="form-input"
+            className="form-control"
             pattern="[a-zA-Z]+"
             id="first_name"
             onChange={handleChange}
@@ -75,7 +75,7 @@ function ReservationForm(){
         <div className="form-item">
           <label htmlFor="last_name">Last Name:</label>
           <input
-            className="form-input"
+            className="form-control"
             id="last_name"
             onChange={handleChange}
             type="text"
@@ -88,7 +88,7 @@ function ReservationForm(){
         <div className="form-item">
           <label htmlFor="mobile_number">Mobile Number:</label>
           <input
-            className="form-input"
+            className="form-control"
             id="mobile_number"
             onChange={handleChange}
             type="text"
@@ -101,7 +101,7 @@ function ReservationForm(){
         <div className="form-item">
           <label htmlFor="reservation_date">Reservation Date:</label>
           <input
-            className="form-input"
+            className="form-control"
             id="reservation_date"
             onChange={handleChange}
             type="date"
@@ -114,7 +114,7 @@ function ReservationForm(){
         <div className="form-item">
           <label htmlFor="reservation_time">Reservation Time:</label>
           <input
-            className="form-input"
+            className="form-control"
             id="reservation_time"
             onChange={handleChange}
             type="time"
@@ -128,7 +128,7 @@ function ReservationForm(){
         <div className="form-item">
           <label htmlFor="people">Party Size:</label>
           <input
-            className="form-input"
+            className="form-control"
             id="people"
             onChange={handleNumberChange}
             type="number"
@@ -141,11 +141,12 @@ function ReservationForm(){
         </div>
       </fieldset>
       <div className="form-item mt-2 mb-2">
-        <button className="form-button btn btn-success" type="submit">
+        <button className="btn btn-outline-light mb-4 mr-3" 
+            style={{backgroundColor: "#f2469c"}} type="submit">
           Submit
         </button>
         <button
-          className="form-button btn btn-secondary"
+          className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#4a0025"}}
           type="button"
           onClick={() => history.push(`/dashboard?date=${formData.reservation_date}`)}
         >
@@ -154,7 +155,7 @@ function ReservationForm(){
         <ErrorAlert error={postResError} />
       </div>
     </form>
-  </>
+  </div>
 );
 }
 

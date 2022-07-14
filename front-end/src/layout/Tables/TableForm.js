@@ -42,8 +42,8 @@ function TableForm(){
         return () => abortController.abort()
     }
     return(
-        <div>
-            <legend className="form-item">Reservation Form</legend>
+        <div className="container">
+            {/* <legend className="form-item">Reservation Form</legend> */}
             <ErrorAlert error={postResError} />
             <form onSubmit={handleSubmit}>
                 <div>
@@ -63,7 +63,7 @@ function TableForm(){
                     <label htmlFor="capacity">Capacity</label>
                     <input
                         type='number'
-                        className='form-control'
+                        className='form-control mb-4'
                         id='capacity'
                         name='capacity'
                         min={1}
@@ -73,10 +73,12 @@ function TableForm(){
                         required
                     />
                 </div>
-                <button type='submit' className="btn btn-primary">
+                <button type='submit' className="btn btn-outline-light mb-4 mr-3" 
+            style={{backgroundColor: "#f2469c"}}>
                     Submit
                 </button>
-                <button onClick={history.goBack} className="btn btn-danger">
+                <button onClick={history.goBack} className="btn btn-outline-light mb-4 mr-3" 
+            style={{backgroundColor: "#4a0025"}}>
                     Cancel
                 </button>
             </form>

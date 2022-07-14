@@ -1,8 +1,12 @@
 .side-bar {
   background-color: #fc5fad;
   min-width: 200px;
+  
 
 }
 body{
   background-color: #ffdbed
+}
+span{
+  font-size: 25px;
 }

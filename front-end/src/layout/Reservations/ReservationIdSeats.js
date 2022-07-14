@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { listTables, seatTables } from '../../utils/api'
+import { listTables, updateTable } from '../../utils/api'
 import { useHistory, useParams } from 'react-router'
 import ErrorAlert from '../ErrorAlert'
 
@@ -11,9 +11,11 @@ function ReservationIdSeats() {
 
 
     const history = useHistory()
+
+
     useEffect(() => {
         const abortController = new AbortController();
-        setError(null)
+        // setError(null)
         async function loadTables() {
             try {
                 const response = await listTables(abortController.signal)
@@ -25,7 +27,7 @@ function ReservationIdSeats() {
         loadTables()
         return () => abortController.abort();
     }, [])
-    console.log(tables)
+
     function changeHandler({ target }) {
         setSelectOptions({ [target.name]: target.value })
     }
@@ -33,22 +35,22 @@ function ReservationIdSeats() {
     function handleSubmit(event) {
         event.preventDefault()
         const abortController = new AbortController()
-        seatTables(reservationId, Number(selectOptions.table_id), abortController.signal)
+        updateTable(reservationId, Number(selectOptions.table_id), abortController.signal)
             .then(() => history.push('/dashboard'))
             .catch(setError)
 
         return () => abortController.abort()
     }
     return (
-        <div>
-            <ErrorAlert error={error} />
+        <div className="container">
             <h1>Seat Reservation</h1>
 
             <form onSubmit={handleSubmit}>
-                <h2>Table name - Table capacity</h2>
+                <div>
+                <h3>Table name - Table capacity</h3>
                 {tables && (
-                    <div>
-                        <select name='table_id' required onChange={changeHandler}>
+                    <div className="card mb-4">
+                        <select className='rounded m-4' name='table_id' required onChange={changeHandler}>
                             <option value=''>Choose a Table</option>
                             {tables.map(table => (
                                 <option value={table.table_id} key={table.table_id}>
@@ -56,10 +58,12 @@ function ReservationIdSeats() {
                                 </option>
                             ))}
                         </select>
+                        <ErrorAlert error={error} />
                     </div>
                 )}
                 <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#f2469c"}} type='submit'>Submit</button>
                 <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#f2469c"}} onClick={history.goBack}>Cancel</button>
+                </div>
             </form>
         </div>
     )
