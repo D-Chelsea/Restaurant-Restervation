@@ -17,7 +17,7 @@ function ViewReservation({reservations}){
             }
         }
     }
-
+console.log(reservations)
 return(
     <div className="container">
     {reservations.map((reservation) => (
@@ -33,16 +33,27 @@ return(
         <p data-reservation-id-status={`${reservation.reservation_id}`}>
           Status: {reservation.status}
         </p>
+
         
     <div>
       <ErrorAlert error={showError}/>
-      <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#f2469c"}}>
+      <button 
+      className="btn btn-outline-light mb-4 mr-3"
+      style={{backgroundColor: "#f2469c"}}>
         <a href={`/reservations/${reservation.reservation_id}/edit`}>Edit</a>
       </button>
-      <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#f2469c"}}>
+      {reservation.status === "booked" && (
+      <button 
+      className="btn btn-outline-light mb-4 mr-3" 
+      style={{backgroundColor: "#f2469c"}}>
         <a href={`/reservations/${reservation.reservation_id}/seat`}>Seat</a>
       </button>
-      <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#4a0025"}} onClick={handleCancel}>Cancel</button>
+      )}
+      <button 
+      data-reservation-id-cancel={reservation.reservation_id}
+      className="btn btn-outline-light mb-4 mr-3" 
+      style={{backgroundColor: "#4a0025"}} 
+      onClick={handleCancel}>Cancel</button>
     </div>
     </div>
       )}

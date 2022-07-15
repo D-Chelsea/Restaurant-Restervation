@@ -146,15 +146,15 @@ export async function readReservation(reservation_id, signal) {
 
 /** returns updated data about the reservation's status to the given reservation's page*/
 
-export async function updateStatus(reservation_id, status, signal) {
-  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}/status`)
+export async function updateStatus(reservationId, status, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservationId}/status`
   const options = {
-    method: "PUT",
+    method: 'PUT',
     headers,
-    body: JSON.stringify({ data: { status } }),
-    signal,
+    body: JSON.stringify({ data: { status: 'cancelled' } }),
+    signal
   }
-  return await fetchJson(url, options, status)
+  return await fetchJson(url, options)
 }
 
 export async function updateTable(reservationId, tableId, signal) {

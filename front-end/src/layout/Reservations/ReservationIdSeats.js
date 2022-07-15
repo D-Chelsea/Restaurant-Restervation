@@ -41,6 +41,7 @@ function ReservationIdSeats() {
 
         return () => abortController.abort()
     }
+    console.log(selectOptions)
     return (
         <div className="container">
             <h1>Seat Reservation</h1>

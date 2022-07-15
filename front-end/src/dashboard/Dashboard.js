@@ -32,7 +32,7 @@ function Dashboard() {
       .catch(setError);
     return () => abortController.abort();
   }
-
+console.log(reservations)
 
   function loadDashboard() {
     const abortController = new AbortController();
