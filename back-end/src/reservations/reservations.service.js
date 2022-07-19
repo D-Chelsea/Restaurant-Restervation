@@ -56,6 +56,12 @@ function listByDate(reservation_date) {
         .update({ status })
         .then(() => read(reservation_id))
 }
+function destroy(reservation_id) {
+  return knex('reservations')
+      .select('*')
+      .where({ reservation_id })
+      .del()
+}
 
 module.exports = {
     list,
@@ -66,4 +72,5 @@ module.exports = {
     updateTables,
     update,
     updateStatus,
+    destroy,
 }

@@ -33,7 +33,7 @@ function ViewTables({ table, index }) {
         const abortController = new AbortController()
 
         try {
-            if (window.confirm('Is this table ready to seat new guests? This cannot be undone.')) {
+            if (window.confirm("Is this table ready to seat new guests? This cannot be undone.")) {
                 await deleteTable(tableId)
                 history.go()
             }

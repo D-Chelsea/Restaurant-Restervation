@@ -76,9 +76,21 @@ console.log(reservations)
 
         <div>
           <div>
-            <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#83e6cb"}} onClick={() => handlePreviousDate(date)}>Previous</button>
-            <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#83e6cb"}} onClick={() => setDate(today())}>Today</button>
-            <button className="btn btn-outline-light mb-4 mr-3" style={{backgroundColor: "#83e6cb"}} onClick={() => handleNextDate(date)}>Next</button>
+            <button 
+            className="btn btn-outline-light mb-4 mr-3"
+             style={{backgroundColor: "#83e6cb"}} 
+             onClick={() => handlePreviousDate(date)}>
+               Previous</button>
+            <button 
+            className="btn btn-outline-light mb-4 mr-3"
+            style={{backgroundColor: "#83e6cb"}} 
+            onClick={() => setDate(today())}>
+              Today</button>
+            <button 
+            className="btn btn-outline-light mb-4 mr-3" 
+            style={{backgroundColor: "#83e6cb"}} 
+            onClick={() => handleNextDate(date)}>
+              Next</button>
           </div>
         </div>
       </div>

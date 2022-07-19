@@ -175,3 +175,10 @@ export async function deleteTable(tableId) {
   }
   return await fetchJson(url, options)
 }
+export async function deleteReservation(reservationId) {
+  const url = `${API_BASE_URL}/reservations/${reservationId}`
+  const options = {
+    method: 'DELETE'
+  }
+  return await fetchJson(url, options)
+}

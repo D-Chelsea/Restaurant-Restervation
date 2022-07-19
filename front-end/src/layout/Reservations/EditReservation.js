@@ -63,6 +63,7 @@ export default function EditReservation() {
         }
         return () => abortController.abort()
     }
+    console.log(formData.reservation_time)
 
     return (
         <div>
@@ -136,7 +137,6 @@ export default function EditReservation() {
                 required
                 placeholder="reservation_time"
                 value={formData.reservation_time}
-                step="900"
             />
             </div>
             <div className="form-item">
@@ -158,7 +158,8 @@ export default function EditReservation() {
             <button 
             className="btn btn-outline-light mb-4 mr-3" 
             style={{backgroundColor: "#f2469c"}}
-            type="submit">
+            type="submit"
+            >
             Submit
             </button>
             <button

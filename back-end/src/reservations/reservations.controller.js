@@ -140,19 +140,12 @@ function hasValidDate(req, res, next){
 }
 
 function hasReservationTime(req, res, next){
-  const reservation_time = req.body.data.reservation_time
-  if(!reservation_time){
-    next({status: 400, message: "reservation_time is missing"})
-  };
-  var military = /^\s*([01]?\d|2[0-3]):[0-5]\d\s*$/i;
-  var standard = /^\s*(0?\d|1[0-2]):[0-5]\d(\s+(AM|PM))?\s*$/i;
- 
-  if(reservation_time.match(military) || reservation_time.match(standard)){
-    res.locals.reservation_time = reservation_time
-
+  const validTimeRegex = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/;
+  const {reservation_time} = req.body.data;
+  if (validTimeRegex.test(reservation_time)) {
     return next();
   }
-  next({status: 400, message: `reservation_time isn't valid ${reservation_time}`})
+  next({status : 400, message: `reservation_time must be type 'time'`})
 }
 
 function isValidDay(req, res, next) {
@@ -267,6 +260,11 @@ async function update(req, res) {
   const data = await service.update(updatedReservation)
   res.json({ data })
 }
+async function destroy(req,res ) {
+  const { reservation_id } = res.locals.reservation
+  await service.destroy(reservation_id)
+  res.sendStatus(204)
+}
 
 module.exports = {
   list: [asyncErrorBoundary(list)],
@@ -303,4 +301,8 @@ module.exports = {
     hasValidDate,
     asyncErrorBoundary(update)
   ],
+  delete: [
+    asyncErrorBoundary(reservationExists),
+    asyncErrorBoundary(destroy)
+  ]
 };
