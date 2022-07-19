@@ -4,12 +4,14 @@ Deployed Link: [https://retaurant-res-front-end.herokuapp.com/dashboard]
 Back-end Deployed link: [https://restautarant-res-back-end.herokuapp.com/reservations]
 
 ## Languages and Technologies Used
-1.HTML
-1.React
-1.Node.js
-1.Express
-1.Knex
-1.Bootstrap
+
+* HTML
+* React
+* Node.js
+* Express
+* Knex
+* Bootstrap
+
 
 This repository is set up as a *monorepo*, meaning that the frontend and backend projects are in one repository. This allows you to open both projects in the same editor.
 
@@ -19,8 +21,8 @@ This repository is set up as a *monorepo*, meaning that the frontend and backend
 | `./back-end`     | The backend project, which runs on `localhost:6001` by default.  |
 | `./front-end`    | The frontend project, which runs on `localhost:3000` by default. |
 
-##Examples and Screenshots
-###/Dashboard
+## Examples and Screenshots
+### /Dashboard
 
 >A user will see the list of available tables and reservations based on the date perameter.
 
