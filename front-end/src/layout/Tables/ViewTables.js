@@ -58,6 +58,8 @@ function ViewTables({ table, index }) {
                     )}
                     {table.reservation_id && (
                         <button 
+                        className="btn btn-outline-light mb-4 mr-3" 
+                        style={{backgroundColor: "#f2469c"}}
                         type='submit'
                         data-table-id-finish={`${table.table_id}`} 
                         onClick={() => handleFinish(table.table_id)}>
