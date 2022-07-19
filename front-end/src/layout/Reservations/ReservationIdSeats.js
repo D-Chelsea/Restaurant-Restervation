@@ -5,7 +5,7 @@ import ErrorAlert from '../ErrorAlert'
 
 function ReservationIdSeats() {
     const [tables, setTables] = useState([])
-    const [selectOptions, setSelectOptions] = useState('')
+    const [selectTables, setSelectTables] = useState('')
     const [error, setError] = useState(null)
     const { reservationId } = useParams()
 
@@ -25,23 +25,22 @@ function ReservationIdSeats() {
             }
         }
         loadTables()
-        return () => abortController.abort();
+        return () => abortController.abort()
     }, [])
 
     function changeHandler({ target }) {
-        setSelectOptions({ [target.name]: target.value })
+        setSelectTables({ [target.name]: target.value })
     }
 
     function handleSubmit(event) {
         event.preventDefault()
         const abortController = new AbortController()
-        updateTable(reservationId, Number(selectOptions.table_id), abortController.signal)
+        updateTable(reservationId, Number(selectTables.table_id), abortController.signal)
             .then(() => history.push('/dashboard'))
             .catch(setError)
 
         return () => abortController.abort()
     }
-    console.log(selectOptions)
     return (
         <div className="container">
             <h1>Seat Reservation</h1>

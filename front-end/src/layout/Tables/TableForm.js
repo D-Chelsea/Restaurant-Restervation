@@ -13,21 +13,26 @@ function TableForm(){
 
       
 
-      const [formData, setFormData] = useState(initialFormState);
-      const [postResError, setPostResError] = useState(false);
+      const [formData, setFormData] = useState(initialFormState)
+      const [postResError, setPostResError] = useState(false)
 
-      const handleChange = ({ target }) => {
-        setFormData({
-            ...formData,
-            [target.name]: target.value,
-        })
-    }
-        const handleNumber = ({ target }) => {
-            setFormData({
-             ...formData,
-                [target.name]: Number(target.value)
-            })
-    }
+    //   const hangdleChange = ({ target }) => {
+    //     setFormData({
+    //         ...formData,
+    //         [target.name]: target.value,
+    //     })
+    // }
+
+    const handleChange = (event) => {
+        event.preventDefault();
+        setFormData((newTable) => ({
+          ...newTable,[event.target.name]: event.target.value}))
+      }
+      const handleNumberChange = (event) => {
+        event.preventDefault();
+        setFormData((newReservation) => ({
+          ...newReservation,[event.target.name]: Number(event.target.value)}))
+      }
 
       const handleSubmit = async (event) => {
         event.preventDefault();
@@ -69,7 +74,7 @@ function TableForm(){
                         min={1}
                         placeholder="1"
                         value={formData.capacity}
-                        onChange={handleNumber}
+                        onChange={handleNumberChange}
                         required
                     />
                 </div>

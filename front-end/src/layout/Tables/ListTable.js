@@ -1,7 +1,7 @@
 import React from 'react'
 import ViewTable from '../Tables/ViewTables'
 
-export default function TableList({ tables }) {
+function TableList({ tables }) {
     return (
         <div>
             {tables && (
@@ -18,3 +18,5 @@ export default function TableList({ tables }) {
         </div>
     )
 }
+
+export default TableList

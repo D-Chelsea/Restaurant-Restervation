@@ -7,7 +7,7 @@ function list() {
 }
 function create(reservation) {
     if (!reservation) {
-        throw new Error("Reservation is required.");
+        throw new Error("Reservation is required.")
       }
     return knex("reservations")
         .insert(reservation)
@@ -18,7 +18,7 @@ function read(reservation_id) {
     return knex("reservations")
         .select("*")
         .where({ reservation_id })
-        .first();
+        .first()
   }
 
 function listByMobileNumber(mobile_number) {

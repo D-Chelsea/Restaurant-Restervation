@@ -33,7 +33,7 @@
   ]);
 
   const invalidFields = Object.keys(data).filter((field) => {
-    return !validFields.has(field);
+    return !validFields.has(field)
   }
   );
 
@@ -59,7 +59,7 @@ function hasFirstName(req, res, next) {
   const first_name = req.body.data.first_name;
   if (first_name && first_name !== "") {
     res.locals.first_name = first_name;
-    return next();
+    return next()
   }
   next({
     status: 400,
@@ -70,7 +70,7 @@ function hasLastName(req, res, next) {
   const last_name = req.body.data.last_name;
   if (last_name && last_name !== "") {
     res.locals.last_name = last_name;
-    return next();
+    return next()
   }
   next({
     status: 400,
@@ -81,24 +81,24 @@ function hasMobileNumber(req, res, next) {
   const mobile_number = req.body.data.mobile_number;
   if (mobile_number && mobile_number !== "") {
     res.locals.mobile_number = mobile_number;
-    return next();
+    return next()
   }
   next({
     status: 400,
     message: "Property mobile_number must be included.",
-  });
+  })
 }
 
 function hasPeople(req, res, next) {
   const people = req.body.data.people;
   if (people && people !== "" && people !== 0) {
     res.locals.people = people;
-    return next();
+    return next()
   }
   next({
     status: 400,
     message: "Property people must be included.",
-  });
+  })
 }
 function peopleValidation(req, res, next) {
   if (typeof req.body.data.people !== "number") {
@@ -107,23 +107,23 @@ function peopleValidation(req, res, next) {
       message: "Property people must be a number.",
     })
   }
-  next();
+  next()
 }
 function peopleGreaterThanZero(req, res, next) {
   if (!res.locals.people > 0) {
     return next({
       status: 400,
       message: "Property people must be greater than zero.",
-    });
+    })
   }
-  next();
+  next()
 }
 
 function hasReservationDate(req, res, next) {
   const reservation_date = req.body.data.reservation_date;
   if (reservation_date && reservation_date !== "") {
     res.locals.reservation_date = reservation_date;
-    return next();
+    return next()
   }
   next({
     status: 400,
@@ -135,7 +135,7 @@ function hasValidDate(req, res, next){
   let valid = new Date(reservation_date)
   if(valid.toString() != 'Invalid Date'){
     return next();
-  };
+  }
   next({status:400, message: "reservation_date is not valid"});
 }
 
@@ -161,7 +161,7 @@ function isValidDay(req, res, next) {
   const { data } = req.body;
   const reservationDate = new Date(
     `${data.reservation_date} ${data.reservation_time}`
-  );
+  )
   let day = days[reservationDate.getDay()];
   let time = data.reservation_time;
   if (reservationDate < new Date() && day === "Tuesday") {
@@ -169,27 +169,27 @@ function isValidDay(req, res, next) {
       status: 400,
       message:
         "Reservations can only be created on a future date, excluding Tuesdays",
-    });
+    })
   }
   if (reservationDate < new Date()) {
     return next({
       status: 400,
       message: "Reservations can only be created on a future date",
-    });
+    })
   }
   if (day === "Tuesday") {
     return next({
       status: 400,
       message: "Restaurant is closed on Tuesdays",
-    });
+    })
   }
   if (time <= "10:30" || time >= "21:30") {
     return next({
       status: 400,
       message: "Reservations can only be made from 10:30AM - 9:30PM.",
-    });
+    })
   }
-  next();
+  next()
 }
 
 function validStatus(req, res, next) {
@@ -199,9 +199,9 @@ function validStatus(req, res, next) {
       status: 400,
       message:
         "A new reservation cannot be created with a status of seated or finished",
-    });
+    })
   }
-  next();
+  next()
 }
 function hasStatus(req, res, next) {
   const { status } = req.body.data
@@ -238,7 +238,7 @@ async function list(req, res, next) {
 async function create(req, res, next) {
   const data = await service.create(req.body.data)
   res.status(201).json({ data })  
-};
+}
 
 function read(req, res) {
   const { reservation: data } = res.locals;
@@ -305,4 +305,4 @@ module.exports = {
     asyncErrorBoundary(reservationExists),
     asyncErrorBoundary(destroy)
   ]
-};
+}

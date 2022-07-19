@@ -3,6 +3,7 @@ import { useHistory } from "react-router"
 import ErrorAlert from '../ErrorAlert'
 import { deleteReservation } from '../../utils/api'
 
+
 function ViewReservation({reservations}){
     const [showError, setShowError] = useState(null);
     const history = useHistory()
@@ -20,7 +21,7 @@ function ViewReservation({reservations}){
         return () => abortController.abort()
     }
 
-console.log(reservations)
+
 return(
     <div className="container">
     {reservations.map((reservation) => (

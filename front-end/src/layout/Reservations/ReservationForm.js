@@ -37,17 +37,14 @@ function ReservationForm(){
           ...formData
         }
         try {
-          const response = await createReservation(newReservation, abortController.signal);
-          console.log("Success: " + response)
+          await createReservation(newReservation, abortController.signal)
           setFormData({...initialFormState});
           history.push(`/dashboard?date=${newReservation.reservation_date}`)
         } catch (error) {
-          if (error.name !== "AbortError") {setPostResError(error)}
+          setPostResError(error)
         }
   
-        return () => {
-          abortController.abort();
-        }
+        return () => abortController.abort()
       }
 
 

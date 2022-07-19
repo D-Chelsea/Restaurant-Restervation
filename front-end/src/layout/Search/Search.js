@@ -17,7 +17,7 @@ export default function Search() {
             const response = await listReservations({ mobile_number: number }, abortController.signal)
             setReservations(response)
             setfound(true)
-            setNumber('')
+            setNumber("")
         } catch (error) {
             setError(error)
         }
