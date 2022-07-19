@@ -75,12 +75,11 @@ async function fetchJson(url, options, onCancel) {
 
 /**
  * Saves resrvation to the database (public/data/db.json).
- * There is no validation done on the deck object, any object will be saved.
  * @param newReservation
  *  the reservattion to save, which must not have an `id` property
  * @param signal
  *  optional AbortController.signal
- * @returns {Promise<deck>}
+ * @returns {Promise<reservation>}
  *  a promise that resolves the saved reservation, which will now have an `id` property.
  * Creates a new reservation.
  */
@@ -94,7 +93,15 @@ async function fetchJson(url, options, onCancel) {
   };
   return await fetchJson(url, options, reservation);
 }
-
+/**
+ * Updates resrvation to the database (public/data/db.json).
+ * @param newReservation
+ *  the reservattion to save, which must not have an `id` property
+ * @param signal
+ *  optional AbortController.signal
+ * @returns {Promise<Error>}
+ * Creates an updated reservation.
+ */
 export async function updateReservation(reservation, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation.reservation_id}`
   const options = {
@@ -105,6 +112,15 @@ export async function updateReservation(reservation, signal) {
   }
   return await fetchJson(url, options, reservation)
 }
+/**
+ * Creates a new table associated with the specified `tableId`.
+ * @param table
+ *  the id of the target deck
+ * @param signal
+ *  optional AbortController.signal
+ * @returns {Promise<Error|*>}
+ *  a promise that resolves to the new table, which will have an `id` property.
+ */
 export async function createTable(table, signal) {
   const url = `${API_BASE_URL}/tables`
   const options = {
@@ -121,8 +137,6 @@ export async function createTable(table, signal) {
  * @returns {Promise<[tables]>}
  *  a promise that resolves to a possibly empty array of tables saved in the database.
  */
-
-
  export async function listTables(signal) {
   const url = `${API_BASE_URL}/tables`
   return await fetchJson(url, { signal })
@@ -143,9 +157,15 @@ export async function readReservation(reservation_id, signal) {
   .then(formatReservationDate)
   .then(formatReservationTime)
 }
-
-/** returns updated data about the reservation's status to the given reservation's page*/
-
+/**
+ * Updates table to the database in relation to the recervationID (public/data/db.json).
+ * @param reservationId
+ *  the reservattion to save, which must not have an `id` property
+ * @param signal
+ *  optional AbortController.signal
+ * @returns {Promise<Error>}
+ * Creates an updated table status of canceled so the table can be deleted.
+ */
 export async function updateStatus(reservationId, status, signal) {
   const url = `${API_BASE_URL}/reservations/${reservationId}/status`
   const options = {
@@ -156,7 +176,17 @@ export async function updateStatus(reservationId, status, signal) {
   }
   return await fetchJson(url, options)
 }
-
+/**
+ * Updates table to the database (public/data/db.json).
+ * @param tableId
+ *  the table to save, which must not have an `id` property
+ * @param reservationId
+ *  the reservationId, which must not have an `id` property
+ * @param signal
+ *  optional AbortController.signal
+ * @returns {Promise<Error>}
+ * Creates an updated table.
+ */
 export async function updateTable(reservationId, tableId, signal) {
   const url = `${API_BASE_URL}/tables/${tableId}/seat`
   const options = {
@@ -167,7 +197,15 @@ export async function updateTable(reservationId, tableId, signal) {
   }
   return await fetchJson(url, options)
 }
-
+/**
+ * Deletes the table with the specified `tableId`.
+ * @param cardId
+ *  the id of the table to delete
+ * @param signal
+ *  optional AbortController.signal
+ * @returns {Promise<Error|*>}
+ *  a promise that resolves to an empty object.
+ */
 export async function deleteTable(tableId) {
   const url = `${API_BASE_URL}/tables/${tableId}/seat`
   const options = {
@@ -175,6 +213,15 @@ export async function deleteTable(tableId) {
   }
   return await fetchJson(url, options)
 }
+/**
+ * Deletes the card with the specified `reservationId`.
+ * @param reservationId
+ *  the id of the reservation to delete
+ * @param signal
+ *  optional AbortController.signal
+ * @returns {Promise<Error|*>}
+ *  a promise that resolves to an empty object.
+ */
 export async function deleteReservation(reservationId) {
   const url = `${API_BASE_URL}/reservations/${reservationId}`
   const options = {

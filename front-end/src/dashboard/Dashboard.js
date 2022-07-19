@@ -32,7 +32,6 @@ function Dashboard() {
       .catch(setError);
     return () => abortController.abort();
   }
-console.log(reservations)
 
   function loadDashboard() {
     const abortController = new AbortController();
@@ -54,9 +53,7 @@ console.log(reservations)
     setDate(next(date))
     history.push(`dashboard?date=${next(date)}`)
   }
-//when I console.log reservations i get an emty array. I cant remeber when this issue happened but it doesnt effect the UI
 
-console.log(reservations)
   return (
     <main>
       <div className="text-center py-4">

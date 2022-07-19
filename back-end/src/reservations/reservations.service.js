@@ -38,13 +38,13 @@ function listByDate(reservation_date) {
       .whereNot({status: "finished"})
       .orderBy("reservation_time", "asc")
   }
-  async function updateTables(reservation_id, status) {
+function updateTables(reservation_id, status) {
     return knex("reservations")
       .where({ reservation_id })
       .update({ status }, "*")
       .then((updated) => updated[0])
   }
-  async function update(reservation) {
+function update(reservation) {
     return knex("reservations")
       .where({ reservation_id: reservation.reservation_id })
       .update(reservation, "*")

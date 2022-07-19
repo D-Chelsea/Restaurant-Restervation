@@ -42,8 +42,7 @@ function ViewTables({ table, index }) {
         }
         return () => abortController.abort()
     }
-    console.log(table)
-    console.log(reservations)
+
     const foundRes = reservations.find(res => Number(table.reservation_id) === Number(res.reservation_id))
     return (
         <div className="container">

@@ -4,7 +4,7 @@
 
  const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
  const service = require("./reservations.service")
-
+//Checking if the reservation at the givin Id exists
  async function reservationExists(req, res, next) {
   const { reservation_id } = req.params;
 
@@ -17,6 +17,7 @@
   next({ status: 404, message: `reservation_id not found: ${reservation_id}` });
 }
 
+//checking if the reservation has all the required fields
  function hasValidFields(req, res, next) {
   const { data = {} } = req.body
   const validFields = new Set([
@@ -44,7 +45,7 @@
     });
   next();
 };
-
+//checks if the reservation has data
 function hasData(req, res, next) {
   if (!req.body.data) {
     return next({
@@ -55,6 +56,7 @@ function hasData(req, res, next) {
   next();
 }
 
+//checks for first name in the validation
 function hasFirstName(req, res, next) {
   const first_name = req.body.data.first_name;
   if (first_name && first_name !== "") {
@@ -66,6 +68,8 @@ function hasFirstName(req, res, next) {
     message: "Property first_name must be included.",
   });
 }
+
+//checks for last name in the validation
 function hasLastName(req, res, next) {
   const last_name = req.body.data.last_name;
   if (last_name && last_name !== "") {
@@ -77,6 +81,8 @@ function hasLastName(req, res, next) {
     message: "Property last_name must be included.",
   });
 }
+
+//checks for mobile number in the validation
 function hasMobileNumber(req, res, next) {
   const mobile_number = req.body.data.mobile_number;
   if (mobile_number && mobile_number !== "") {
@@ -89,6 +95,7 @@ function hasMobileNumber(req, res, next) {
   })
 }
 
+//checks that the people data isnt emty or a 0
 function hasPeople(req, res, next) {
   const people = req.body.data.people;
   if (people && people !== "" && people !== 0) {
@@ -100,6 +107,8 @@ function hasPeople(req, res, next) {
     message: "Property people must be included.",
   })
 }
+
+//checks that the property is a number
 function peopleValidation(req, res, next) {
   if (typeof req.body.data.people !== "number") {
     return next({
@@ -109,6 +118,8 @@ function peopleValidation(req, res, next) {
   }
   next()
 }
+
+//checks that the people data isnt 0
 function peopleGreaterThanZero(req, res, next) {
   if (!res.locals.people > 0) {
     return next({
@@ -119,6 +130,7 @@ function peopleGreaterThanZero(req, res, next) {
   next()
 }
 
+//checks the reservation date isnt an empty string
 function hasReservationDate(req, res, next) {
   const reservation_date = req.body.data.reservation_date;
   if (reservation_date && reservation_date !== "") {
@@ -130,6 +142,8 @@ function hasReservationDate(req, res, next) {
     message: "Property reservation_date must be included.",
   })
 }
+
+//checks if the date isnt a string
 function hasValidDate(req, res, next){
   const reservation_date = req.body.data.reservation_date
   let valid = new Date(reservation_date)
@@ -139,6 +153,7 @@ function hasValidDate(req, res, next){
   next({status:400, message: "reservation_date is not valid"});
 }
 
+//checks the reservation time. The RegEx converts to 00:00:00
 function hasReservationTime(req, res, next){
   const validTimeRegex = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$/;
   const {reservation_time} = req.body.data;
@@ -148,6 +163,7 @@ function hasReservationTime(req, res, next){
   next({status : 400, message: `reservation_time must be type 'time'`})
 }
 
+//check that the reservation is a valid day of the week. reservation wont submit if tuesday or a future day or not durring business hours
 function isValidDay(req, res, next) {
   const days = [
     "Sunday",
@@ -192,6 +208,7 @@ function isValidDay(req, res, next) {
   next()
 }
 
+//checks the reservation status. This comes from connecting the tables table
 function validStatus(req, res, next) {
   const { data } = req.body;
   if (data.status === "seated" || data.status === "finished") {
@@ -203,6 +220,8 @@ function validStatus(req, res, next) {
   }
   next()
 }
+
+//checks that the reservation has a status. if something is wrong with this check then check the tables connection
 function hasStatus(req, res, next) {
   const { status } = req.body.data
   const statuses = ['booked', 'seated', 'finished', 'cancelled']
@@ -214,6 +233,8 @@ function hasStatus(req, res, next) {
     message: `Unknown Status: ${status}. Status must be one of ${statuses.join(", ")}.`
   })
 }
+
+//this finished the reservation
 function checkFinish(req, res, next) {
   const { status } = res.locals.reservation
   if (status === 'finished') {
@@ -224,6 +245,8 @@ function checkFinish(req, res, next) {
   }
   next()
 }
+
+//lists reservations
 async function list(req, res, next) {
   const { date } = req.query
   const { mobile_number } = req.query
@@ -235,22 +258,27 @@ async function list(req, res, next) {
     res.json({ data: await service.list() });
   }
 }
+
+//create reservatons
 async function create(req, res, next) {
   const data = await service.create(req.body.data)
   res.status(201).json({ data })  
 }
-
+//read reservations at the reservationId
 function read(req, res) {
   const { reservation: data } = res.locals;
   res.json({ data });
 }
 
+//updates the status of the reservation
 async function updateStatus(req, res) {
   const { reservation_id } = res.locals.reservation
   const { status } = req.body.data
   const data = await service.updateStatus(reservation_id, status)
   res.json({ data })
 }
+
+//updates an existing reservaiton
 async function update(req, res) {
   const { reservation_id } = res.locals.reservation
   const updatedReservation = {
@@ -260,6 +288,8 @@ async function update(req, res) {
   const data = await service.update(updatedReservation)
   res.json({ data })
 }
+
+//deletes reservation
 async function destroy(req,res ) {
   const { reservation_id } = res.locals.reservation
   await service.destroy(reservation_id)
