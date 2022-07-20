@@ -24,14 +24,6 @@ function ViewTables({ table, index }) {
         return () => abortController.abort()
     }, [])
 
-    // useEffect(() => {
-    //     const abortController = new AbortController()
-    //     async function loadReservations() {
-    //         listReservations().then(setReservations).catch(setError)
-    //     }
-    //     loadReservations()
-    //     return () => abortController.abort()
-    // }, [])
     useEffect(() => {
         const abortController = new AbortController();
         async function loadReservations() {
@@ -46,14 +38,6 @@ function ViewTables({ table, index }) {
         return () => abortController.abort()
     }, [])
 
-    // useEffect(() => {
-    //     const abortController = new AbortController()
-    //     function loadTables() {
-    //         listTables(abortController.signal).catch(setError)
-    //     }
-    //     loadTables()
-    //     return () => abortController.abort()
-    // }, [])
 
     async function handleFinish(tableId) {
         const abortController = new AbortController()
