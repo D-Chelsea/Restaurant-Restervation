@@ -5,9 +5,9 @@ import { deleteReservation } from '../../utils/api'
 
 
 function ViewReservation({reservations}){
-    const [showError, setShowError] = useState(null);
+    const [error, setError] = useState(null);
     const history = useHistory()
-    /** handle cancel a reservation*/
+
     async function handleCancel(reservationId) {
       const abortController = new AbortController()
         if (window.confirm('Do you want to cancel this reservation? This cannot be undone.')) {
@@ -15,7 +15,7 @@ function ViewReservation({reservations}){
                 await deleteReservation(reservationId)
                 history.go()
             } catch (error) {
-                setShowError(error)
+                setError(error)
             }
         }
         return () => abortController.abort()
@@ -40,7 +40,7 @@ return(
 
         
     <div>
-      <ErrorAlert error={showError}/>
+      <ErrorAlert error={error}/>
       <button 
       className="btn btn-outline-light mb-4 mr-3"
       style={{backgroundColor: "#f2469c"}}>

@@ -22,24 +22,32 @@ function Dashboard() {
   const [error, setError] = useState(null);
   const [date, setDate] = useState(query.get("date") || today())
 
-  useEffect(loadDashboard, [date])
-  useEffect(loadTables, [])
+  useEffect(() =>{
+    const abortController = new AbortController()
+    async function loadTables(){
+      try{
+        listTables(abortController.signal)
+        .then(setTables)
+      }catch(error){
+        setError(error)
+      }
+    }
+    loadTables()
+  }, [])
 
-  function loadTables() {
-    const abortController = new AbortController();
-    listTables(abortController.signal)
-      .then(setTables)
-      .catch(setError);
-    return () => abortController.abort();
-  }
 
-  function loadDashboard() {
-    const abortController = new AbortController();
-    listReservations({ date }, abortController.signal)
-      .then(setReservations)
-      .catch(setError);
-    return () => abortController.abort();
-  }
+  useEffect(() =>{
+    const abortController = new AbortController()
+    async function loadDashboard(){
+      try{
+        listReservations({date}, abortController.signal)
+        .then(setReservations)
+      }catch(error){
+        setError(error)
+      }
+    }
+    loadDashboard()
+  }, [date])
 
   function handleDateChange({ target }) {
     setDate(target.value)

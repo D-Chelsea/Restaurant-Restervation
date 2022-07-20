@@ -15,7 +15,6 @@ function ReservationIdSeats() {
 
     useEffect(() => {
         const abortController = new AbortController();
-        // setError(null)
         async function loadTables() {
             try {
                 const response = await listTables(abortController.signal)

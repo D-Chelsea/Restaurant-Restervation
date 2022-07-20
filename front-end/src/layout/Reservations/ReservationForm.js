@@ -119,7 +119,6 @@ function ReservationForm(){
             required
             placeholder="reservation_time"
             value={formData.reservation_time}
-            step="900"
           />
         </div>
         <div className="form-item">

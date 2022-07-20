@@ -10,18 +10,8 @@ function TableForm(){
         table_name: "",
         capacity: 0,
       }
-
-      
-
-      const [formData, setFormData] = useState(initialFormState)
-      const [postResError, setPostResError] = useState(false)
-
-    //   const hangdleChange = ({ target }) => {
-    //     setFormData({
-    //         ...formData,
-    //         [target.name]: target.value,
-    //     })
-    // }
+    const [formData, setFormData] = useState(initialFormState)
+    const [postResError, setPostResError] = useState(false)
 
     const handleChange = (event) => {
         event.preventDefault();

@@ -1,6 +1,8 @@
 const service = require("./tables.service")
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 const reservationService = require("../reservations/reservations.service")
+
+
 const validProperties = ["capacity", "table_name"]
 
 //checking if the Table has all requred fields
@@ -104,7 +106,7 @@ function validTable(req, res, next) {
   }
   next()
 }
-//chekcs the occumpied status of the table
+//chekcs the occupied status of the table
 function Occupied(req, res, next) {
   const table = res.locals.table
   if (table.reservation_id === null) {

@@ -5,29 +5,55 @@ import { listReservations, listTables, deleteTable } from '../../utils/api'
 
 
 function ViewTables({ table, index }) {
-    const [reservations, setReservations] = useState([])
-    const [error, setError] = useState(null)
     const history = useHistory()
 
-    useEffect(() => {
-        const abortController = new AbortController()
 
-        function loadReservations() {
-            listReservations().then(setReservations).catch(setError)
+    const [reservations, setReservations] = useState([])
+    const [error, setError] = useState(null)
+
+    useEffect(() => {
+        const abortController = new AbortController();
+        async function loadTables() {
+            try {
+                await listTables(abortController.signal)
+            } catch (error) {
+                setError(error)
+            }
+        }
+        loadTables()
+        return () => abortController.abort()
+    }, [])
+
+    // useEffect(() => {
+    //     const abortController = new AbortController()
+    //     async function loadReservations() {
+    //         listReservations().then(setReservations).catch(setError)
+    //     }
+    //     loadReservations()
+    //     return () => abortController.abort()
+    // }, [])
+    useEffect(() => {
+        const abortController = new AbortController();
+        async function loadReservations() {
+            try {
+                const response= await listReservations(abortController.signal)
+                setReservations(response)
+            } catch (error) {
+                setError(error)
+            }
         }
         loadReservations()
         return () => abortController.abort()
     }, [])
 
-    useEffect(() => {
-        const abortController = new AbortController()
-
-        function loadTables() {
-            listTables(abortController.signal).catch(setError)
-        }
-        loadTables()
-        return () => abortController.abort()
-    }, [])
+    // useEffect(() => {
+    //     const abortController = new AbortController()
+    //     function loadTables() {
+    //         listTables(abortController.signal).catch(setError)
+    //     }
+    //     loadTables()
+    //     return () => abortController.abort()
+    // }, [])
 
     async function handleFinish(tableId) {
         const abortController = new AbortController()
